@@ -31,3 +31,29 @@ Route::get('/contact', function () {
 Route::get('/connexion', function () {
     return view('connexion');
 })->name('connexion');
+
+
+use App\Http\Controllers\EmployeController;
+
+Route::resource('employes', EmployeController::class);
+
+// Liste des employés
+Route::get('/employes', [EmployeController::class, 'index'])->name('employes.index');
+
+// Formulaire de création d'un employé
+Route::get('/employes/create', [EmployeController::class, 'create'])->name('employes.create');
+
+// Enregistrer un nouvel employé
+Route::post('/employes', [EmployeController::class, 'store'])->name('employes.store');
+
+// Afficher un employé spécifique
+Route::get('/employes/{id}', [EmployeController::class, 'show'])->name('employes.show');
+
+// Formulaire d'édition d'un employé
+Route::get('/employes/{id}/edit', [EmployeController::class, 'edit'])->name('employes.edit');
+
+// Mettre à jour les informations d'un employé
+Route::put('/employes/{id}', [EmployeController::class, 'update'])->name('employes.update');
+
+// Supprimer un employé
+Route::delete('/employes/{id}', [EmployeController::class, 'destroy'])->name('employes.destroy');
