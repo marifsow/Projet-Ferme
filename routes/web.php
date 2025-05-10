@@ -1,59 +1,88 @@
 <?php
 use App\Http\Controllers\AnimalController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\SuiviSanitaireController;
+
+use App\Http\Controllers\EmployeController;
 Route::get('/', function () {
     return view('home');
-})->name('home');
+});
+    Route::get('/home', [AnimalController::class, 'home'])->name('home');
+    Route::get('/contact', [AnimalController::class, 'contact'])->name('contact');
 
-// Liste des animaux
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+require __DIR__.'/auth.php';
+
+
+
+
+// Liste des routes pour les animaux
+
+// Affiche la liste des animaux
 Route::get('/animaux', [AnimalController::class, 'index'])->name('animaux.index');
 
-// Créer un animal
+// Affiche le formulaire de création d’un animal
 Route::get('/animaux/create', [AnimalController::class, 'create'])->name('animaux.create');
+
+// Enregistre un nouvel animal
 Route::post('/animaux', [AnimalController::class, 'store'])->name('animaux.store');
 
-// Afficher un animal
+// Affiche les détails d’un animal
 Route::get('/animaux/{id}', [AnimalController::class, 'show'])->name('animaux.show');
 
-// Modifier un animal
+// Affiche le formulaire d’édition d’un animal
 Route::get('/animaux/{id}/edit', [AnimalController::class, 'edit'])->name('animaux.edit');
+
+// Met à jour les informations d’un animal
 Route::put('/animaux/{id}', [AnimalController::class, 'update'])->name('animaux.update');
 
-// Supprimer un animal
+// Supprime un animal
 Route::delete('/animaux/{id}', [AnimalController::class, 'destroy'])->name('animaux.destroy');
 
-// Contact et connexion
 Route::get('/contact', function () {
     return view('contact');
 })->name('contact');
 
-Route::get('/connexion', function () {
-    return view('connexion');
-})->name('connexion');
 
 
-use App\Http\Controllers\EmployeController;
 
-Route::resource('employes', EmployeController::class);
 
-// Liste des employés
+
 Route::get('/employes', [EmployeController::class, 'index'])->name('employes.index');
-
-// Formulaire de création d'un employé
 Route::get('/employes/create', [EmployeController::class, 'create'])->name('employes.create');
-
-// Enregistrer un nouvel employé
 Route::post('/employes', [EmployeController::class, 'store'])->name('employes.store');
-
-// Afficher un employé spécifique
 Route::get('/employes/{id}', [EmployeController::class, 'show'])->name('employes.show');
-
-// Formulaire d'édition d'un employé
 Route::get('/employes/{id}/edit', [EmployeController::class, 'edit'])->name('employes.edit');
-
-// Mettre à jour les informations d'un employé
 Route::put('/employes/{id}', [EmployeController::class, 'update'])->name('employes.update');
-
-// Supprimer un employé
 Route::delete('/employes/{id}', [EmployeController::class, 'destroy'])->name('employes.destroy');
+
+// // ✅ Route pour confirmation avant suppression
+// Route::get('/employes/{id}/delete', [EmployeController::class, 'confirmDelete'])->name('employes.confirmDelete');
+
+
+
+
+
+Route::get('/suivis', [SuiviSanitaireController::class, 'index'])->name('suivis.index');
+Route::get('/suivis/create', [SuiviSanitaireController::class, 'create'])->name('suivis.create');
+Route::post('/suivis', [SuiviSanitaireController::class, 'store'])->name('suivis.store');
+Route::get('/suivis/{id}', [SuiviSanitaireController::class, 'show'])->name('suivis.show');
+Route::get('/suivis/{id}/edit', [SuiviSanitaireController::class, 'edit'])->name('suivis.edit');
+Route::put('/suivis/{id}', [SuiviSanitaireController::class, 'update'])->name('suivis.update');
+Route::delete('/suivis/{id}', [SuiviSanitaireController::class, 'destroy'])->name('suivis.destroy');
+
+// ✅ Route pour confirmation avant suppression
+Route::get('/suivis/{id}/delete', [SuiviSanitaireController::class, 'confirmDelete'])->name('suivis.confirmDelete');
+
+

@@ -7,6 +7,13 @@ use Illuminate\Http\Request;
 
 class AnimalController extends Controller
 {
+
+    public function contact(){
+        return view('contact');
+    }
+    public function home(){
+        return view('home');
+    }
     // Afficher la liste des animaux
     public function index()
     {

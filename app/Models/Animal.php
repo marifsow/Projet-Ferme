@@ -16,4 +16,15 @@ class Animal extends Model
     protected $casts = [
         'date_naissance' => 'date',  // Cela va convertir automatiquement la valeur en objet Carbon
     ];
+
+
+    public function suivisSanitaires()
+{
+    return $this->hasMany(SuiviSanitaire::class);
 }
+
+}
+
+
+
+

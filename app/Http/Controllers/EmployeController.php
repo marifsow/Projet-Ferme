@@ -9,11 +9,11 @@ use Illuminate\Http\Request;
 class EmployeController extends Controller
 {
     // Afficher la liste des employés
-    public function index()
-    {
-        $employes = Employe::all();
-        return view('employes.index', compact('employes'));
-    }
+   public function index()
+{
+    $employes = Employe::paginate(10);  // Utilisez paginate() au lieu de all()
+    return view('employes.index', compact('employes'));
+}
 
     // Afficher le formulaire de création d'un employé
     public function create()
@@ -74,4 +74,10 @@ class EmployeController extends Controller
 
         return redirect()->route('employes.index')->with('success', 'L\'employé a été supprimé.');
     }
+    public function confirmDelete($id)
+{
+    $employe = Employe::findOrFail($id);
+    return view('employes.delete', compact('employe'));
+}
+
 }
