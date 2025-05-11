@@ -189,7 +189,7 @@ a.btn-primary:hover {
                         <td>{{ \Carbon\Carbon::parse($animal->date_naissance)->format('d/m/Y') }}</td>
                         <td>{{ $animal->etat_sante }}</td>
                         <td>
-                       
+
     <!-- Disposition horizontale des boutons avec espacement -->
     <div class="btn-group" role="group" aria-label="Actions">
         <!-- Bouton Voir -->

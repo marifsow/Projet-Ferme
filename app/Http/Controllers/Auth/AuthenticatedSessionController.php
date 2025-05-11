@@ -30,10 +30,11 @@ class AuthenticatedSessionController extends Controller
         $user = Auth::user();
 
         if ($user->role){
-            return redirect('deshboard')->while('success', 'connexion réussie (admin)');
+            return redirect()->route('dashboard');
+
         }
 
-        return redirect()->route('home')->while('success', 'connexion reussit');
+        return redirect()->route('home');
     }
 
     /**

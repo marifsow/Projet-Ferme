@@ -86,3 +86,38 @@ Route::delete('/suivis/{id}', [SuiviSanitaireController::class, 'destroy'])->nam
 Route::get('/suivis/{id}/delete', [SuiviSanitaireController::class, 'confirmDelete'])->name('suivis.confirmDelete');
 
 
+
+use App\Http\Controllers\SuivisSanitaireController;
+
+
+// ✅ Dashboard (page principale, accessible uniquement si authentifié)
+Route::middleware(['auth', 'verified'])->group(function () {
+
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+
+    // ✅ CRUD Animaux
+    Route::resource('animaux', AnimalController::class);
+
+    // ✅ CRUD Employés
+    Route::resource('employes', EmployeController::class);
+
+    // ✅ CRUD Suivis Sanitaires
+    Route::resource('suivis', SuiviSanitaireController::class);
+
+    // ✅ Profil utilisateur (Laravel Breeze / Jetstream)
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+
+
+
+
+
+
+Route::get('/animaux-public', [AnimalController::class, 'publicIndex'])->name('animaux.public');
+
+

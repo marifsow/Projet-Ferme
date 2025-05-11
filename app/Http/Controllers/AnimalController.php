@@ -7,13 +7,16 @@ use Illuminate\Http\Request;
 
 class AnimalController extends Controller
 {
-
-    public function contact(){
+    public function contact()
+    {
         return view('contact');
     }
-    public function home(){
+
+    public function home()
+    {
         return view('home');
     }
+
     // Afficher la liste des animaux
     public function index()
     {
@@ -80,4 +83,11 @@ class AnimalController extends Controller
 
         return redirect()->route('animaux.index')->with('success', 'L\'animal a été supprimé.');
     }
+
+ public function publicIndex()
+{
+    $animaux = Animal::all();
+    return view('animaux.public', compact('animaux'));
+}
+
 }
